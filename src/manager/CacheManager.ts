@@ -61,3 +61,4 @@ class CacheManager{
     }
 }
 
+var CM = CacheManager.getInstance();

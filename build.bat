@@ -1,12 +1,14 @@
 @echo off
 if exist index.js del index.js
 
+type D:\myFile\gameserver2\build\db\CacheData.js >> index.js
 type D:\myFile\gameserver2\build\db\HangVO.js >> index.js
 type D:\myFile\gameserver2\build\db\MonsterVO.js >> index.js
 type D:\myFile\gameserver2\build\db\PropVO.js >> index.js
 type D:\myFile\gameserver2\build\db\SkillVO.js >> index.js
 type D:\myFile\gameserver2\build\db\TecVO.js >> index.js
 type D:\myFile\gameserver2\build\manager\CacheManager.js >> index.js
+type D:\myFile\gameserver2\build\manager\TimeManager.js >> index.js
 
 type D:\myFile\gameserver2\build\pk\data\PKStateListener.js >> index.js
 type D:\myFile\gameserver2\build\pk\monsterData\MBase.js >> index.js
@@ -175,9 +177,14 @@ type D:\myFile\gameserver2\build\pk\skillData\9\S187.js >> index.js
 type D:\myFile\gameserver2\build\pk\skillData\9\S188.js >> index.js
 type D:\myFile\gameserver2\build\pk\skillData\9\S189.js >> index.js
 type D:\myFile\gameserver2\build\pk\skillData\9\S190.js >> index.js
+
+
+type D:\myFile\gameserver2\build\pkOther\AtkMVCtrl.js >> index.js
+type D:\myFile\gameserver2\build\pkOther\PKCounter.js >> index.js
 	
 	
 type D:\myFile\gameserver2\build\util\ArrayUtil.js >> index.js
+type D:\myFile\gameserver2\build\util\ObjectUtil.js >> index.js
 type D:\myFile\gameserver2\build\util\Base64.js >> index.js
 type D:\myFile\gameserver2\build\util\md5.js >> index.js
 

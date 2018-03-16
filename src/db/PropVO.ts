@@ -24,9 +24,6 @@ class PropVO {
         this.type = data.type;
     }
 
-    public getThumb(){
-        return Config.localResRoot + 'prop/prop_'+this.id+'.png';
-    }
 
 
 }

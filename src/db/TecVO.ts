@@ -42,9 +42,6 @@ class TecVO {
         this.prop3 = data.prop3
     }
 
-    public getThumb(){
-        return Config.localResRoot + 'tec/tec_'+this.id+'.jpg';
-    }
 
 
 }

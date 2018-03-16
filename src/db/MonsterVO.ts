@@ -82,9 +82,6 @@ class MonsterVO {
     }
 
     public getImage(gay){
-        if(gay)
-            return Config.localResRoot + 'card_gay/card_'+this.id+'.jpg';
-        return Config.localResRoot + 'card/card_'+this.id+'.jpg';
     }
 
     public getBG(){
@@ -100,8 +97,6 @@ class MonsterVO {
     }
 
     public preLoad(){
-        RES.getResAsync('"enemy'+this.id+'_png',function(){},this)
-         MBase.getData(this.id).preload();
     }
 
     public getAdd(force,type?){
