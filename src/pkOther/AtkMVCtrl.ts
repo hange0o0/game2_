@@ -29,6 +29,11 @@ class AtkMVCtrl {
     public sSkillMV(mid,target:PKMonsterData){
 
     }
+    public hpSkillMV(id,teamData,scale){
+
+    }
+
+
 }
 
 var UM:any = {}
