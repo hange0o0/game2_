@@ -31,6 +31,7 @@ module.exports = class PKHall{
             if(room.userList.length == 0 || tt - room.startTime > 60*6*1000)//大于6分钟
             {
                 PKRoom.freeItem(this.roomList[s])
+                console.log('remove room:' + s,tt - room.startTime)
                 delete this.roomList[s];
             }
         }
@@ -43,7 +44,8 @@ module.exports = class PKHall{
             var user = this.userData[s];
 
             //处理玩家死尸
-            if(tt - user.actionTime > 6*60*100)//大于6分钟
+
+            if(tt - user.actionTime > 6*60*1000)//大于6分钟
             {
                 this.removeUser(s);
                 continue;
@@ -60,10 +62,11 @@ module.exports = class PKHall{
         for(var s in data)
         {
             var arr = data[s];
+
             if(arr.length < 2)
                 continue;
             arr.sort(this.sortFun);
-            while(arr.length > 2)
+            while(arr.length >= 2)
             {
                  var user = arr.shift();
                  this.pairOne(user,arr);
@@ -74,7 +77,7 @@ module.exports = class PKHall{
     //在列表中找一个合适的
     private pairOne(user,list){
         var find//分数最接近的
-        var dec
+        var dec = Number.MAX_VALUE;
         for(var i=0;i<list.length;i++)
         {
             var item = list[i];
@@ -92,6 +95,7 @@ module.exports = class PKHall{
             return
         if(timeDec < 10 && dec > 100)
             return
+
 
         //成功
         var index = list.indexOf(find);
@@ -128,6 +132,7 @@ module.exports = class PKHall{
                 room && room.removeUser(gameid)
             }
             delete this.userData[gameid];
+            console.log('remove user:',gameid)
         }
 
     }
@@ -158,6 +163,6 @@ module.exports = class PKHall{
             return;
         }
 
-        room.onMessage(data)
+        room.onRoomMsg(data)
     }
 }

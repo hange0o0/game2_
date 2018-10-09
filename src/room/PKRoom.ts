@@ -56,6 +56,7 @@ module.exports = class PKRoom{
             user.pkData.id = i+1
             user.pkData.team = i+1
         }
+        console.log('success')
         this.sendToAll('pair_success',{
             pkData:this.pkData
         })
@@ -91,6 +92,14 @@ module.exports = class PKRoom{
         var head = data.head;
         var gameid = data.gameid;
         var msg = data.msg;
+        var user = this.getUser(gameid);
+        if(!user)
+        {
+            PKClient.sendToUser(gameid,head,{fail:3},data.callbackid);
+            return;
+        }
+        user.actionTime = Date.now();
+
         switch(head)
         {
             case 'pk_info':
@@ -107,12 +116,6 @@ module.exports = class PKRoom{
             case 'pk_result':
                 if(msg.win)
                     this.winList.push(gameid);
-                var user = this.getUser(gameid);
-                if(!user)
-                {
-                    PKClient.sendToUser(gameid,head,{fail:3},data.callbackid);
-                    break;
-                }
                 this.sendToUser(gameid,'pk_result',{
                     data:user.createPKResult(msg.win),
                 },data.callbackid)

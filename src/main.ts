@@ -71,6 +71,7 @@ PKHall.getInstance().start();
 // PKClient.addClient(1)
 // Scream server example: "hi" -> "HI!!!"
 //创建一个server
+console.log("server start")
 var server = ws.createServer(function (conn) {
     console.log("New connection")
     PKClient.addClient(conn)
@@ -87,4 +88,7 @@ var server = ws.createServer(function (conn) {
         console.log("Connection closed")
         PKClient.removeClient(conn)
     })
-}).listen(3000)
+    conn.on('error',function(){
+        PKClient.removeClient(conn)
+    });
+}).listen(9029)
