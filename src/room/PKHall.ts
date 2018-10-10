@@ -118,9 +118,21 @@ module.exports = class PKHall{
         var user = PKUser.createItem(data)
         user.setData(data);
         user.actionTime = Date.now();
+        this.removeUser(user.gameid) //清死尸
         this.userData[user.gameid] = user;
     }
 
+
+    //玩家断线了
+    public desConnectUser(gameid){
+        var user = this.getUser(gameid)
+        if(user)
+        {
+            if(user.roomid && this.getRoom(user.roomid))//正在游戏中
+                return;
+            this.removeUser(user.gameid)
+        }
+    }
 
 
     public removeUser(gameid){
@@ -152,14 +164,14 @@ module.exports = class PKHall{
         var user = this.getUser(gameid)
         if(!user)
         {
-            PKClient.sendToUser(gameid,head,{fail:1},data.callbackid);
+            PKClient.sendToUser(gameid,head,{fail:1},data);
             return;
         }
         user.actionTime = Date.now();
         var room = this.getRoom(user.roomid)
         if(!room)
         {
-            PKClient.sendToUser(gameid,head,{fail:2},data.callbackid);
+            PKClient.sendToUser(gameid,head,{fail:2},data);
             return;
         }
 

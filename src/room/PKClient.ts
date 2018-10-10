@@ -39,16 +39,23 @@ module.exports = class PKClient{
         }
     }
 
-    public static sendToUser(gameid,head,msg,index=0){
+    public static sendToUser(gameid,head,msg,orginData?){
         var conn = this.getConnByGameid(gameid);
         console.log('callSend:'+gameid)
         if(conn)
         {
-            var str = JSON.stringify({
+            var oo:any = {
                 head:head,
-                msg:msg,
-                callbackid:index
-            });
+                msg:msg
+            };
+            if(orginData)
+            {
+                if(orginData.gameid)
+                    oo.from = orginData.gameid;
+                if(orginData.callbackid)
+                    oo.callbackid = orginData.callbackid;
+            }
+            var str = JSON.stringify(oo);
             conn.sendText(str)
             console.log('send:'+gameid + ':',str)
         }

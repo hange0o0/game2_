@@ -86,9 +86,17 @@ var server = ws.createServer(function (conn) {
     //关闭时触发的消息
     conn.on("close", function (code, reason) {
         console.log("Connection closed")
+        if(conn.gameid)
+        {
+            PKHall.getInstance().desConnectUser(conn.gameid);
+        }
         PKClient.removeClient(conn)
     })
     conn.on('error',function(){
+        if(conn.gameid)
+        {
+            PKHall.getInstance().desConnectUser(conn.gameid);
+        }
         PKClient.removeClient(conn)
     });
 }).listen(9029)

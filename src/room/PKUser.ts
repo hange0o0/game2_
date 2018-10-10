@@ -37,14 +37,14 @@ module.exports = class PKUser{
          this.score = data.score;
     }
 
-    public sendData(head,msg,callbackid?){
-        PKClient.sendToUser(this.gameid,head,msg,callbackid);
+    public sendData(head,msg,orginData?){
+        PKClient.sendToUser(this.gameid,head,msg,orginData);
     }
 
     public createPKResult(isWin){
         var key = md5.incode(this.gameid + '_' + this.pkData.card + '_hange0o0_server')
         return {
-            iswin:true,
+            iswin:isWin,
             key:key
         }
     }

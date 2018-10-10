@@ -58,33 +58,33 @@ module.exports = class PKRoom{
         }
         console.log('success')
         this.sendToAll('pair_success',{
-            pkData:this.pkData
+            pkdata:this.pkData
         })
     }
 
-    public sendToAll(head,msg){
+    public sendToAll(head,msg,orginData?){
          for(var i=0;i<this.userList.length;i++)
          {
-             this.userList[i].sendData(head,msg)
+             this.userList[i].sendData(head,msg,orginData)
          }
     }
 
-    public sendToUser(gameid,head,msg,callbackid?){
+    public sendToUser(gameid,head,msg,orginData?){
         for(var i=0;i<this.userList.length;i++)
         {
             if(gameid == this.userList[i].gameid)
             {
-                this.userList[i].sendData(head,msg,callbackid);
+                this.userList[i].sendData(head,msg,orginData);
                 break;
             }
         }
     }
 
-    public sendToOthers(gameid,head,msg){
+    public sendToOthers(gameid,head,msg,orginData){
          for(var i=0;i<this.userList.length;i++)
          {
              if(gameid != this.userList[i].gameid)
-                 this.userList[i].sendData(head,msg)
+                 this.userList[i].sendData(head,msg,orginData)
          }
     }
 
@@ -95,7 +95,7 @@ module.exports = class PKRoom{
         var user = this.getUser(gameid);
         if(!user)
         {
-            PKClient.sendToUser(gameid,head,{fail:3},data.callbackid);
+            PKClient.sendToUser(gameid,head,{fail:3},data);
             return;
         }
         user.actionTime = Date.now();
@@ -104,21 +104,17 @@ module.exports = class PKRoom{
         {
             case 'pk_info':
                 this.actionRecord.push(msg);
-                this.sendToAll('pk_info',{
-                    data:msg
-                })
+                this.sendToAll('pk_info',msg,data)
                 break
             case 'face':
                 this.sendToOthers(gameid,'face',{
                     data:msg
-                })
+                },data)
                 break;
             case 'pk_result':
                 if(msg.win)
                     this.winList.push(gameid);
-                this.sendToUser(gameid,'pk_result',{
-                    data:user.createPKResult(msg.win),
-                },data.callbackid)
+                this.sendToUser(gameid,'pk_result',user.createPKResult(msg.win),data)
 
                 //记日志
                 if(this.winList.length > 1)
@@ -143,6 +139,7 @@ module.exports = class PKRoom{
 
     //清除
     public remove(){
+
         this.userList.length = 0
         this.actionRecord.length = 0
     }
