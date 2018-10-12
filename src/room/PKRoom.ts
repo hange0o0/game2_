@@ -88,6 +88,13 @@ module.exports = class PKRoom{
          }
     }
 
+    private getPassTime(){
+        var cd = Date.now() - this.startTime;
+        if(cd < 5000)
+            return 0;
+        return cd - 5000;
+    }
+
     public onRoomMsg(data){
         var head = data.head;
         var gameid = data.gameid;
@@ -103,13 +110,24 @@ module.exports = class PKRoom{
         switch(head)
         {
             case 'pk_info':
+                msg.passtime = this.getPassTime();
+                if(Math.abs(msg.actiontime - msg.passtime) > 3000)//有问题的数据
+                {
+                    this.sendToUser(gameid,'pk_reset',{})
+                    break;
+                }
                 this.actionRecord.push(msg);
                 this.sendToAll('pk_info',msg,data)
                 break
             case 'face':
-                this.sendToOthers(gameid,'face',{
-                    data:msg
-                },data)
+                // msg.passtime = this.getPassTime();
+                this.sendToOthers(gameid,'face',msg,data)
+                break;
+            case 'ispking':
+                this.sendToUser(gameid,'ispking',{
+                    passtime:this.getPassTime(),
+                    action:this.actionRecord,
+                    pkdata:this.pkData},data)
                 break;
             case 'pk_result':
                 if(msg.win)
@@ -121,6 +139,14 @@ module.exports = class PKRoom{
                 {
                     
                 }
+
+                break;
+            case 'get_reset_data':
+                this.sendToUser(gameid,'get_reset_data',{
+                    pkdata:this.pkData,
+                    action:this.actionRecord,
+                    passtime:this.getPassTime(),
+                },data)
 
                 break;
         }

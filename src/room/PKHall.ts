@@ -96,6 +96,7 @@ module.exports = class PKHall{
         if(timeDec < 10 && dec > 100)
             return
 
+        console.log(timeDec,dec)
 
         //成功
         var index = list.indexOf(find);

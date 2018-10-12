@@ -80,8 +80,10 @@ var server = ws.createServer(function (conn) {
         console.log("Received "+str)
         var data = JSON.parse(str);
         conn.lastTime = Date.now();
-        PKServer.getInstance().onDataReceive(data,conn)
-        // conn.sendText(str.toUpperCase()+"!!!")
+        PKServer.getInstance().onDataReceive(data,conn);
+        if(data.head == 'pair')
+            PKClient.disconnectOld(conn.gameid)
+                // conn.sendText(str.toUpperCase()+"!!!")
     })
     //关闭时触发的消息
     conn.on("close", function (code, reason) {

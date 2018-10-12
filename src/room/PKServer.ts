@@ -20,14 +20,19 @@ module.exports = class PKServer{
          {
              case 'pair':
                  PKHall.getInstance().addUser(msg);
+                 
                  break;
              case 'pk_info':
              case 'face':
+             case 'get_reset_data':
                  PKHall.getInstance().onRoomMsg(data);
                  break;
              case 'pk_result':
                  PKHall.getInstance().onRoomMsg(data);
                  PKHall.getInstance().removeUser(gameid);
+                 break;
+             case 'ispking':
+                 PKHall.getInstance().onRoomMsg(data);
                  break;
          }
     }
