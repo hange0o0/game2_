@@ -36,6 +36,8 @@ module.exports = class PKHall{
             }
         }
 
+            // this['adfasdf']();
+
 
         //玩家分类
         var data = {};

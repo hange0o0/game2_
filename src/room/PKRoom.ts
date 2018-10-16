@@ -1,4 +1,5 @@
-var PKClient = (require('./PKClient'));
+//var PKClient = (require('./PKClient'));
+import PKClient from './PKClient';
 module.exports = class PKRoom{
     private static pool = [];
     private static roomIndex = 1;

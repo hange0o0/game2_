@@ -1,4 +1,4 @@
-module.exports = class PKClient{
+export default class PKClient{
     private static list = []
     private static userObject = {};
 

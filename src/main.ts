@@ -62,7 +62,8 @@
 
 var ws = require("nodejs-websocket")
 
-var PKClient = (require('./room/PKClient'));
+// var PKClient = (require('./room/PKClient'));
+import PKClient from './room/PKClient';
 var PKHall = (require('./room/PKHall'));
 var PKServer = (require('./room/PKServer'));
 
@@ -102,3 +103,13 @@ var server = ws.createServer(function (conn) {
         PKClient.removeClient(conn)
     });
 }).listen(9029)
+
+var fs = require('fs');
+process.on('uncaughtException', (e)=>{
+    console.log(e.stack + '')
+
+    fs.writeFileSync('./error.txt',new Date() +'\n' + e.stack + '\n',{flag: 'a'});
+    // console.log('finish')
+    // for(var s in e)
+    //     console.log(s,e[s])
+})
